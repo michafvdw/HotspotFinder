@@ -3,8 +3,9 @@ import MapView, { Marker } from 'react-native-maps';
 import tw from 'tailwind-react-native-classnames';
 import { AppContext } from '../context/AppContext';
 
+
 const MapScreen = ({ route }) => {
-  const { hotspots } = useContext(AppContext);
+  const { hotspots, darkMode } = useContext(AppContext);
   const [region, setRegion] = useState({
     latitude: 51.9225,
     longitude: 4.47917,

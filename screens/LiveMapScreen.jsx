@@ -5,6 +5,7 @@ import MapView, { Marker } from 'react-native-maps';
 import tw from 'tailwind-react-native-classnames';
 import { AppContext } from '../context/AppContext';
 
+
 const LiveMapScreen = () => {
   const { hotspots, darkMode } = useContext(AppContext);
   const [location, setLocation] = useState(null);
@@ -80,19 +81,17 @@ const LiveMapScreen = () => {
         ))}
       </MapView>
 
-      {/* Search input and list */}
       <View style={tw`absolute top-6 left-4 right-4`}>
         <TextInput
           placeholder="Zoek restaurant..."
           placeholderTextColor={darkMode ? '#ccc' : '#888'}
-          style={tw`bg-white rounded px-4 py-2 shadow ${darkMode ? 'bg-gray-800 text-white' : 'text-black'}`}
+          style={tw`rounded px-4 py-2 shadow ${darkMode ? 'bg-gray-800 text-white' : 'bg-white text-black'}`}
           value={search}
           onChangeText={setSearch}
           returnKeyType="done"
           onSubmitEditing={Keyboard.dismiss}
         />
 
-        {/* Filtered List */}
         {search.length > 0 && (
           <FlatList
             data={filteredHotspots}
@@ -115,5 +114,3 @@ const LiveMapScreen = () => {
 };
 
 export default LiveMapScreen;
-
-
