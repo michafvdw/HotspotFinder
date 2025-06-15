@@ -8,8 +8,9 @@ export const AppProvider = ({ children }) => {
   const [darkMode, setDarkMode] = useState(false);
   const [favorites, setFavorites] = useState([]);
   const [notes, setNotes] = useState({});
-  const [hotspots, setHotspots] = useState([]); // Altijd array
+  const [hotspots, setHotspots] = useState([]); // Altijd een array
 
+  // Laad data uit AsyncStorage bij opstarten
   useEffect(() => {
     const loadData = async () => {
       try {
@@ -19,8 +20,8 @@ export const AppProvider = ({ children }) => {
         const savedDarkMode = await AsyncStorage.getItem('darkMode');
         if (savedDarkMode !== null) setDarkMode(savedDarkMode === 'true');
 
-        const favs = await AsyncStorage.getItem('favorites');
-        if (favs) setFavorites(JSON.parse(favs));
+        const savedFavorites = await AsyncStorage.getItem('favorites');
+        if (savedFavorites) setFavorites(JSON.parse(savedFavorites));
 
         const savedNotes = await AsyncStorage.getItem('notes');
         if (savedNotes) setNotes(JSON.parse(savedNotes));
@@ -31,17 +32,20 @@ export const AppProvider = ({ children }) => {
     loadData();
   }, []);
 
+  // Update layout mode en sla op
   const updateLayout = async (mode) => {
     setLayoutMode(mode);
     await AsyncStorage.setItem('layoutMode', mode);
   };
 
+  // Toggle dark mode en sla op
   const toggleDarkMode = async () => {
     const newMode = !darkMode;
     setDarkMode(newMode);
     await AsyncStorage.setItem('darkMode', newMode.toString());
   };
 
+  // Toggle favoriet status en sla op
   const toggleFavorite = async (id) => {
     const newFavorites = favorites.includes(id)
       ? favorites.filter(fId => fId !== id)
@@ -50,6 +54,7 @@ export const AppProvider = ({ children }) => {
     await AsyncStorage.setItem('favorites', JSON.stringify(newFavorites));
   };
 
+  // Sla notitie op per hotspot id
   const saveNote = async (id, text) => {
     const newNotes = { ...notes, [id]: text };
     setNotes(newNotes);

@@ -62,12 +62,25 @@ const HomeScreen = () => {
 
   return (
     <View style={tw`flex-1 p-4 ${darkMode ? 'bg-gray-900' : 'bg-gray-100'}`}>
-      <View style={tw`flex-row justify-between items-center mb-4`}>
-        <Text style={tw`text-2xl font-bold ${darkMode ? 'text-white' : 'text-black'}`}>Restaurants in Rotterdam</Text>
-        <TouchableOpacity onPress={() => navigation.navigate('Settings')} style={tw`bg-blue-600 px-4 py-2 rounded`}>
-          <Text style={tw`text-white`}>Instellingen</Text>
-        </TouchableOpacity>
-      </View>
+  <Text style={tw`text-2xl font-bold mb-4 ${darkMode ? 'text-white' : 'text-black'}`}>
+    Restaurants in Rotterdam
+  </Text>
+
+  <View style={tw`space-y-4 mb-4`}>
+    <TouchableOpacity 
+      onPress={() => navigation.navigate('Settings')} 
+      style={tw`bg-blue-600 px-4 py-2 rounded`}
+    >
+      <Text style={tw`text-white text-center`}>Instellingen</Text>
+    </TouchableOpacity>
+
+    <TouchableOpacity 
+      onPress={() => navigation.navigate('Favorites')} 
+      style={tw`bg-green-600 px-4 py-2 rounded`}
+    >
+      <Text style={tw`text-white text-center`}>Favorieten</Text>
+    </TouchableOpacity>
+  </View>
 
       {loading ? (
         <View style={tw`flex-1 justify-center items-center`}>
@@ -81,6 +94,7 @@ const HomeScreen = () => {
         />
       )}
     </View>
+    
   );
 };
 
