@@ -54,24 +54,31 @@ const HomeScreen = () => {
   return (
     <View style={tw`flex-1 p-4 ${darkMode ? 'bg-gray-900' : 'bg-gray-100'}`}>
       <View style={tw`mb-4`}>
-        <Text style={tw`text-2xl font-bold mb-2 ${darkMode ? 'text-white' : 'text-black'}`}>
-          Restaurants in Rotterdam
-        </Text>
+  <Text style={tw`text-2xl font-bold mb-2 ${darkMode ? 'text-white' : 'text-black'}`}>
+    Restaurants in Rotterdam
+  </Text>
 
-        <TouchableOpacity
-          onPress={() => navigation.navigate('Settings')}
-          style={tw`bg-blue-600 px-4 py-2 rounded mb-2`}
-        >
-          <Text style={tw`text-white text-center`}>⚙️ Instellingen</Text>
+  <TouchableOpacity
+    onPress={() => navigation.navigate('Settings')}
+    style={tw`bg-blue-600 px-4 py-2 rounded mb-2`}
+  >
+    <Text style={tw`text-white text-center`}>Instellingen</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
-          onPress={() => navigation.navigate('Favorites')}
-          style={tw`bg-red-600 px-4 py-2 rounded`}
+            onPress={() => navigation.navigate('Favorites')}
+            style={tw`bg-red-600 px-4 py-2 rounded mb-2`}
         >
-          <Text style={tw`text-white text-center`}>❤️ Favorieten</Text>
+            <Text style={tw`text-white text-center`}>Favorieten</Text>
         </TouchableOpacity>
-      </View>
+
+        <TouchableOpacity
+            onPress={() => navigation.navigate('LiveMap')}
+            style={tw`bg-green-600 px-4 py-2 rounded`}
+        >
+            <Text style={tw`text-white text-center`}>Live Kaart</Text>
+        </TouchableOpacity>
+        </View>
 
       {loading ? (
         <View style={tw`flex-1 justify-center items-center`}>

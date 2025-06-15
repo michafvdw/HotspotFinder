@@ -6,6 +6,7 @@ import FavoritesScreen from '../screens/FavoriteScreen';
 import HomeScreen from '../screens/HomeScreen';
 import MapScreen from '../screens/MapScreen';
 import SettingsScreen from '../screens/SettingsScreen';
+import LiveMapScreen from '/Users/micha/HotspotFinder/screens/LiveMapScreen.jsx';
 
 const Stack = createNativeStackNavigator();
 
@@ -17,6 +18,7 @@ export default function Index() {
           <Stack.Screen name="Map" component={MapScreen} />
           <Stack.Screen name="Settings" component={SettingsScreen} />
           <Stack.Screen name="Favorites" component={FavoritesScreen} />
+          <Stack.Screen name="LiveMap" component={LiveMapScreen} options={{ title: 'Live Kaart' }} />
         </Stack.Navigator>
     </AppProvider>
   );
