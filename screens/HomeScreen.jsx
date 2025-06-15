@@ -6,8 +6,7 @@ import HotspotList from '../components/HotspotList';
 import { AppContext } from '../context/AppContext';
 
 const HomeScreen = () => {
-  const { layoutMode, darkMode } = useContext(AppContext);
-  const [hotspots, setHotspots] = useState([]);
+  const { layoutMode, darkMode, setHotspots, hotspots } = useContext(AppContext);
   const [loading, setLoading] = useState(true);
   const navigation = useNavigation();
 
@@ -28,33 +27,25 @@ const HomeScreen = () => {
         const response = await fetch(url);
         const json = await response.json();
 
-        const data = json.elements.map(el => {
-          let lat, lon;
-          if (el.type === 'node') {
-            lat = el.lat;
-            lon = el.lon;
-          } else if (el.center) {
-            lat = el.center.lat;
-            lon = el.center.lon;
-          }
-          return {
-            id: el.id,
-            name: el.tags?.name || 'Naam onbekend',
-            category: el.tags?.amenity || 'restaurant',
-            coordinates: { latitude: lat, longitude: lon }
-          };
-        });
+        const data = json.elements.map(el => ({
+          id: el.id,
+          name: el.tags?.name || 'Naam onbekend',
+          category: el.tags?.amenity || 'restaurant',
+          coordinates: el.type === 'node' 
+            ? { latitude: el.lat, longitude: el.lon }
+            : { latitude: el.center.lat, longitude: el.center.lon }
+        }));
 
         setHotspots(data);
       } catch (err) {
-        console.error('Fout bij ophalen restaurants:', err);
+        console.error('Fout bij ophalen data:', err);
       } finally {
         setLoading(false);
       }
     };
 
     fetchRestaurants();
-  }, []);
+  }, [setHotspots]);
 
   const handleSelect = (item) => {
     navigation.navigate('Map', { hotspot: item });
@@ -62,25 +53,25 @@ const HomeScreen = () => {
 
   return (
     <View style={tw`flex-1 p-4 ${darkMode ? 'bg-gray-900' : 'bg-gray-100'}`}>
-  <Text style={tw`text-2xl font-bold mb-4 ${darkMode ? 'text-white' : 'text-black'}`}>
-    Restaurants in Rotterdam
-  </Text>
+      <View style={tw`mb-4`}>
+        <Text style={tw`text-2xl font-bold mb-2 ${darkMode ? 'text-white' : 'text-black'}`}>
+          Restaurants in Rotterdam
+        </Text>
 
-  <View style={tw`space-y-4 mb-4`}>
-    <TouchableOpacity 
-      onPress={() => navigation.navigate('Settings')} 
-      style={tw`bg-blue-600 px-4 py-2 rounded`}
-    >
-      <Text style={tw`text-white text-center`}>Instellingen</Text>
-    </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => navigation.navigate('Settings')}
+          style={tw`bg-blue-600 px-4 py-2 rounded mb-2`}
+        >
+          <Text style={tw`text-white text-center`}>⚙️ Instellingen</Text>
+        </TouchableOpacity>
 
-    <TouchableOpacity 
-      onPress={() => navigation.navigate('Favorites')} 
-      style={tw`bg-green-600 px-4 py-2 rounded`}
-    >
-      <Text style={tw`text-white text-center`}>Favorieten</Text>
-    </TouchableOpacity>
-  </View>
+        <TouchableOpacity
+          onPress={() => navigation.navigate('Favorites')}
+          style={tw`bg-red-600 px-4 py-2 rounded`}
+        >
+          <Text style={tw`text-white text-center`}>❤️ Favorieten</Text>
+        </TouchableOpacity>
+      </View>
 
       {loading ? (
         <View style={tw`flex-1 justify-center items-center`}>
@@ -94,7 +85,6 @@ const HomeScreen = () => {
         />
       )}
     </View>
-    
   );
 };
 
