@@ -17,7 +17,11 @@ A React Native app to discover and explore popular hotspots (restaurants, cafes,
 
 ## Screenshots
 
-*Add screenshots here to showcase your app*
+### Home Screen
+![Home Screen](./img/Home.png)
+
+### Live Map Screen
+![Live Map Screen](./img/LiveMap.png)
 
 ---
 
@@ -34,5 +38,5 @@ A React Native app to discover and explore popular hotspots (restaurants, cafes,
 1. Clone this repo:
 
    ```bash
-   git clone https://github.com/yourusername/rotterdam-hotspots.git
-   cd rotterdam-hotspots
+   git clone https://github.com/michafvdw/HotspotFinder
+   cd HotspotFinder
